@@ -1,5 +1,30 @@
+<?php
+
+require_once('Models/Todo.php');
+
+// DBからデータを取得する
+
+// インスタンスを$todoという変数に代入
+// インスタンス化 === new クラス名()
+$todo = new Todo();
+
+// 変数の中身を確認したい時
+// echo '<pre>';
+// var_dump($todo);
+// exit;
+
+// DBからデータを取得して、$tasksという変数に代入
+// DBからデータを取得 === TodoクラスのインスタンスのgetAllメソッドを実行
+$tasks = $todo->getAll();
+
+// echo '<pre>';
+// var_dump($tasks);
+// exit;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +34,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <header class="px-5 bg-primary">
         <nav class="navbar navbar-dark">
@@ -25,7 +51,7 @@
         <section>
             <form class="form-row" action="create.php" method="POST">
                 <div class="col-12 col-md-9 py-2">
-                    <input type="text" class="form-control" placeholder="ADD TODO">
+                    <input type="text" name="task" class="form-control" placeholder="ADD TODO">
                 </div>
                 <div class="py-2 col-md-3 col-12">
                     <button type="submit" class="col-12 btn btn-primary btn-block">ADD</button>
@@ -44,31 +70,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>create new website</td>
-                        <td>2019/08/21</td>
-                        <td>
-                            <a class="text-success" href="edit.php">EDIT</a>
-                        </td>
-                        <td>
-                            <a class="text-danger" href="delete.php">DELETE</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>go to club</td>
-                        <td>2019/10/21</td>
-                        <td>
-                            <a class="text-success" href="edit.php">EDIT</a>
-                        </td>
-                        <td>
-                            <a class="text-danger" href="delete.php">DELETE</a>
-                        </td>
-                    </tr>
+                    <!-- 取得したデータを表示する -->
+                    <?php foreach ($tasks as $task) : ?>
+                        <tr>
+                            <td><?php echo $task['name']; ?></td>
+                            <td><?php echo $task['due_date']; ?></td>
+                            <td>
+                                <a class="text-success" href="edit.php">EDIT</a>
+                            </td>
+                            <td>
+                                <a class="text-danger" href="delete.php">DELETE</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
-            </table>  
+            </table>
         </section>
     </main>
-    
+
     <script src="assets/js/app.js"></script>
 </body>
+
 </html>
