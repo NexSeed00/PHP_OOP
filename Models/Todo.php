@@ -79,4 +79,11 @@ class Todo
         // 結果を関数の呼び出し元に返す
         return $task;
     }
+
+    public function update($id, $name)
+    {
+        // データの更新
+        $stmt = $this->db_manager->dbh->prepare('UPDATE ' . $this->table . ' SET name = ? WHERE id = ?');
+        $stmt->execute([$name, $id]);
+    }
 }
